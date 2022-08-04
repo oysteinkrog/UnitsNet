@@ -959,7 +959,7 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }}
-            else if (unitConverter.TryGetConversionFunction((typeof({_quantity.Name}), Unit, typeof({_quantity.Name}), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<{_quantity.Name}, {_quantity.Name}>(Unit, unit, out var conversionFunction))
             {{
                 // See if the unit converter has an extensibility conversion registered.
                 return ({_quantity.Name})conversionFunction(this);
