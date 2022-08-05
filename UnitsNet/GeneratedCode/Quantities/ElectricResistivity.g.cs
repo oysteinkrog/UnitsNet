@@ -284,37 +284,37 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: ElectricResistivityUnit -> BaseUnit
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.KiloohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.KiloohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MegaohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MegaohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MicroohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MicroohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MilliohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MilliohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.NanoohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.NanoohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.PicoohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.PicoohmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.KiloohmCentimeter, quantity => ((quantity * 100) / 1e3d, ElectricResistivityUnit.KiloohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.KiloohmMeter, quantity => ((quantity) / 1e3d, ElectricResistivityUnit.KiloohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MegaohmCentimeter, quantity => ((quantity * 100) / 1e6d, ElectricResistivityUnit.MegaohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MegaohmMeter, quantity => ((quantity) / 1e6d, ElectricResistivityUnit.MegaohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MicroohmCentimeter, quantity => ((quantity * 100) / 1e-6d, ElectricResistivityUnit.MicroohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MicroohmMeter, quantity => ((quantity) / 1e-6d, ElectricResistivityUnit.MicroohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MilliohmCentimeter, quantity => ((quantity * 100) / 1e-3d, ElectricResistivityUnit.MilliohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MilliohmMeter, quantity => ((quantity) / 1e-3d, ElectricResistivityUnit.MilliohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.NanoohmCentimeter, quantity => ((quantity * 100) / 1e-9d, ElectricResistivityUnit.NanoohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.NanoohmMeter, quantity => ((quantity) / 1e-9d, ElectricResistivityUnit.NanoohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.OhmCentimeter, quantity => (quantity * 100, ElectricResistivityUnit.OhmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.PicoohmCentimeter, quantity => ((quantity * 100) / 1e-12d, ElectricResistivityUnit.PicoohmCentimeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.PicoohmMeter, quantity => ((quantity) / 1e-12d, ElectricResistivityUnit.PicoohmMeter));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.OhmMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.OhmMeter, quantity => (quantity, ElectricResistivityUnit.OhmMeter));
 
             // Register in unit converter: BaseUnit -> ElectricResistivityUnit
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.KiloohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.KiloohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.KiloohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.KiloohmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MegaohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MegaohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MegaohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MegaohmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MicroohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MicroohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MicroohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MicroohmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MilliohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MilliohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.MilliohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.MilliohmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.NanoohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.NanoohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.NanoohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.NanoohmMeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.OhmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.OhmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.PicoohmCentimeter, quantity => quantity.ToUnit(ElectricResistivityUnit.PicoohmCentimeter));
-            unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmMeter, ElectricResistivityUnit.PicoohmMeter, quantity => quantity.ToUnit(ElectricResistivityUnit.PicoohmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.KiloohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e3d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.KiloohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e3d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MegaohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e6d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MegaohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e6d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MicroohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e-6d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MicroohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e-6d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MilliohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e-3d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.MilliohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e-3d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.NanoohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e-9d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.NanoohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e-9d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.OhmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => (quantity * 100, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.PicoohmCentimeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity * 100) / 1e-12d, ElectricResistivityUnit.OhmMeter));
+                    unitConverter.SetConversionFunction<ElectricResistivity>(ElectricResistivityUnit.PicoohmMeter, ElectricResistivityUnit.OhmMeter, quantity => ((quantity) / 1e-12d, ElectricResistivityUnit.OhmMeter));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -899,10 +899,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(ElectricResistivity), Unit, typeof(ElectricResistivity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<ElectricResistivity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (ElectricResistivity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new ElectricResistivity(c.Item1, (ElectricResistivityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

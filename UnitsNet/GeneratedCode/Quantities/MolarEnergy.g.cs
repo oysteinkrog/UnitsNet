@@ -215,15 +215,15 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: MolarEnergyUnit -> BaseUnit
-            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.KilojoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => quantity.ToUnit(MolarEnergyUnit.JoulePerMole));
-            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.MegajoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => quantity.ToUnit(MolarEnergyUnit.JoulePerMole));
+                    unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.KilojoulePerMole, quantity => ((quantity) / 1e3d, MolarEnergyUnit.KilojoulePerMole));
+                    unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.MegajoulePerMole, quantity => ((quantity) / 1e6d, MolarEnergyUnit.MegajoulePerMole));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => quantity);
+            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => (quantity, MolarEnergyUnit.JoulePerMole));
 
             // Register in unit converter: BaseUnit -> MolarEnergyUnit
-            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.KilojoulePerMole, quantity => quantity.ToUnit(MolarEnergyUnit.KilojoulePerMole));
-            unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.JoulePerMole, MolarEnergyUnit.MegajoulePerMole, quantity => quantity.ToUnit(MolarEnergyUnit.MegajoulePerMole));
+                    unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.KilojoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => ((quantity) / 1e3d, MolarEnergyUnit.JoulePerMole));
+                    unitConverter.SetConversionFunction<MolarEnergy>(MolarEnergyUnit.MegajoulePerMole, MolarEnergyUnit.JoulePerMole, quantity => ((quantity) / 1e6d, MolarEnergyUnit.JoulePerMole));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -687,10 +687,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(MolarEnergy), Unit, typeof(MolarEnergy), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<MolarEnergy>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (MolarEnergy)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new MolarEnergy(c.Item1, (MolarEnergyUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

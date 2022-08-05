@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: PermittivityUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Permittivity>(PermittivityUnit.FaradPerMeter, PermittivityUnit.FaradPerMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<Permittivity>(PermittivityUnit.FaradPerMeter, PermittivityUnit.FaradPerMeter, quantity => (quantity, PermittivityUnit.FaradPerMeter));
 
             // Register in unit converter: BaseUnit -> PermittivityUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Permittivity), Unit, typeof(Permittivity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Permittivity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Permittivity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Permittivity(c.Item1, (PermittivityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

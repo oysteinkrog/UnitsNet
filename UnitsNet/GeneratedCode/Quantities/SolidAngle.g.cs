@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: SolidAngleUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<SolidAngle>(SolidAngleUnit.Steradian, SolidAngleUnit.Steradian, quantity => quantity);
+            unitConverter.SetConversionFunction<SolidAngle>(SolidAngleUnit.Steradian, SolidAngleUnit.Steradian, quantity => (quantity, SolidAngleUnit.Steradian));
 
             // Register in unit converter: BaseUnit -> SolidAngleUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(SolidAngle), Unit, typeof(SolidAngle), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<SolidAngle>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (SolidAngle)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new SolidAngle(c.Item1, (SolidAngleUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

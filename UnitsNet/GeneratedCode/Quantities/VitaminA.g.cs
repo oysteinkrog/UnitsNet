@@ -205,7 +205,7 @@ namespace UnitsNet
             // Register in unit converter: VitaminAUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<VitaminA>(VitaminAUnit.InternationalUnit, VitaminAUnit.InternationalUnit, quantity => quantity);
+            unitConverter.SetConversionFunction<VitaminA>(VitaminAUnit.InternationalUnit, VitaminAUnit.InternationalUnit, quantity => (quantity, VitaminAUnit.InternationalUnit));
 
             // Register in unit converter: BaseUnit -> VitaminAUnit
         }
@@ -649,10 +649,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(VitaminA), Unit, typeof(VitaminA), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<VitaminA>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (VitaminA)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new VitaminA(c.Item1, (VitaminAUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

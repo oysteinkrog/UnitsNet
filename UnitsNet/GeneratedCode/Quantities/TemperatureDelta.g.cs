@@ -251,27 +251,27 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: TemperatureDeltaUnit -> BaseUnit
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeCelsius, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeDelisle, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeFahrenheit, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeNewton, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeRankine, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeReaumur, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeRoemer, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.MillidegreeCelsius, TemperatureDeltaUnit.Kelvin, quantity => quantity.ToUnit(TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeCelsius, quantity => (quantity, TemperatureDeltaUnit.DegreeCelsius));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeDelisle, quantity => (quantity * -3 / 2, TemperatureDeltaUnit.DegreeDelisle));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeFahrenheit, quantity => (quantity * 9 / 5, TemperatureDeltaUnit.DegreeFahrenheit));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeNewton, quantity => (quantity * 33 / 100, TemperatureDeltaUnit.DegreeNewton));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeRankine, quantity => (quantity * 9 / 5, TemperatureDeltaUnit.DegreeRankine));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeReaumur, quantity => (quantity * 4 / 5, TemperatureDeltaUnit.DegreeReaumur));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeRoemer, quantity => (quantity * 21 / 40, TemperatureDeltaUnit.DegreeRoemer));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.MillidegreeCelsius, quantity => ((quantity) / 1e-3d, TemperatureDeltaUnit.MillidegreeCelsius));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.Kelvin, quantity => quantity);
+            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.Kelvin, quantity => (quantity, TemperatureDeltaUnit.Kelvin));
 
             // Register in unit converter: BaseUnit -> TemperatureDeltaUnit
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeCelsius, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeCelsius));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeDelisle, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeDelisle));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeFahrenheit, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeFahrenheit));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeNewton, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeNewton));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeRankine, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeRankine));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeReaumur, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeReaumur));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.DegreeRoemer, quantity => quantity.ToUnit(TemperatureDeltaUnit.DegreeRoemer));
-            unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.Kelvin, TemperatureDeltaUnit.MillidegreeCelsius, quantity => quantity.ToUnit(TemperatureDeltaUnit.MillidegreeCelsius));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeCelsius, TemperatureDeltaUnit.Kelvin, quantity => (quantity, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeDelisle, TemperatureDeltaUnit.Kelvin, quantity => (quantity * -3 / 2, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeFahrenheit, TemperatureDeltaUnit.Kelvin, quantity => (quantity * 9 / 5, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeNewton, TemperatureDeltaUnit.Kelvin, quantity => (quantity * 33 / 100, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeRankine, TemperatureDeltaUnit.Kelvin, quantity => (quantity * 9 / 5, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeReaumur, TemperatureDeltaUnit.Kelvin, quantity => (quantity * 4 / 5, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.DegreeRoemer, TemperatureDeltaUnit.Kelvin, quantity => (quantity * 21 / 40, TemperatureDeltaUnit.Kelvin));
+                    unitConverter.SetConversionFunction<TemperatureDelta>(TemperatureDeltaUnit.MillidegreeCelsius, TemperatureDeltaUnit.Kelvin, quantity => ((quantity) / 1e-3d, TemperatureDeltaUnit.Kelvin));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -801,10 +801,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(TemperatureDelta), Unit, typeof(TemperatureDelta), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<TemperatureDelta>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (TemperatureDelta)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new TemperatureDelta(c.Item1, (TemperatureDeltaUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

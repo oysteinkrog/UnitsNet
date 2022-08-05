@@ -206,7 +206,7 @@ namespace UnitsNet
             // Register in unit converter: LapseRateUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<LapseRate>(LapseRateUnit.DegreeCelsiusPerKilometer, LapseRateUnit.DegreeCelsiusPerKilometer, quantity => quantity);
+            unitConverter.SetConversionFunction<LapseRate>(LapseRateUnit.DegreeCelsiusPerKilometer, LapseRateUnit.DegreeCelsiusPerKilometer, quantity => (quantity, LapseRateUnit.DegreeCelsiusPerKilometer));
 
             // Register in unit converter: BaseUnit -> LapseRateUnit
         }
@@ -650,10 +650,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(LapseRate), Unit, typeof(LapseRate), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<LapseRate>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (LapseRate)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new LapseRate(c.Item1, (LapseRateUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

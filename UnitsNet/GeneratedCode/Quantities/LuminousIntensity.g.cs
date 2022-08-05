@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: LuminousIntensityUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<LuminousIntensity>(LuminousIntensityUnit.Candela, LuminousIntensityUnit.Candela, quantity => quantity);
+            unitConverter.SetConversionFunction<LuminousIntensity>(LuminousIntensityUnit.Candela, LuminousIntensityUnit.Candela, quantity => (quantity, LuminousIntensityUnit.Candela));
 
             // Register in unit converter: BaseUnit -> LuminousIntensityUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(LuminousIntensity), Unit, typeof(LuminousIntensity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<LuminousIntensity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (LuminousIntensity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new LuminousIntensity(c.Item1, (LuminousIntensityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: MagnetizationUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Magnetization>(MagnetizationUnit.AmperePerMeter, MagnetizationUnit.AmperePerMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<Magnetization>(MagnetizationUnit.AmperePerMeter, MagnetizationUnit.AmperePerMeter, quantity => (quantity, MagnetizationUnit.AmperePerMeter));
 
             // Register in unit converter: BaseUnit -> MagnetizationUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Magnetization), Unit, typeof(Magnetization), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Magnetization>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Magnetization)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Magnetization(c.Item1, (MagnetizationUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

@@ -236,21 +236,21 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: ElectricConductivityUnit -> BaseUnit
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.MicrosiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerMeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.MillisiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerMeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerMeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerFoot, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerMeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerInch, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerMeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.MicrosiemensPerCentimeter, quantity => ((quantity / 1e2) / 1e-6d, ElectricConductivityUnit.MicrosiemensPerCentimeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.MillisiemensPerCentimeter, quantity => ((quantity / 1e2) / 1e-3d, ElectricConductivityUnit.MillisiemensPerCentimeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerCentimeter, quantity => (quantity / 1e2, ElectricConductivityUnit.SiemensPerCentimeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerFoot, quantity => (quantity / 3.2808398950131234, ElectricConductivityUnit.SiemensPerFoot));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerInch, quantity => (quantity / 3.937007874015748e1, ElectricConductivityUnit.SiemensPerInch));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerMeter, quantity => (quantity, ElectricConductivityUnit.SiemensPerMeter));
 
             // Register in unit converter: BaseUnit -> ElectricConductivityUnit
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.MicrosiemensPerCentimeter, quantity => quantity.ToUnit(ElectricConductivityUnit.MicrosiemensPerCentimeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.MillisiemensPerCentimeter, quantity => quantity.ToUnit(ElectricConductivityUnit.MillisiemensPerCentimeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerCentimeter, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerCentimeter));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerFoot, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerFoot));
-            unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerMeter, ElectricConductivityUnit.SiemensPerInch, quantity => quantity.ToUnit(ElectricConductivityUnit.SiemensPerInch));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.MicrosiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => ((quantity / 1e2) / 1e-6d, ElectricConductivityUnit.SiemensPerMeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.MillisiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => ((quantity / 1e2) / 1e-3d, ElectricConductivityUnit.SiemensPerMeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerCentimeter, ElectricConductivityUnit.SiemensPerMeter, quantity => (quantity / 1e2, ElectricConductivityUnit.SiemensPerMeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerFoot, ElectricConductivityUnit.SiemensPerMeter, quantity => (quantity / 3.2808398950131234, ElectricConductivityUnit.SiemensPerMeter));
+                    unitConverter.SetConversionFunction<ElectricConductivity>(ElectricConductivityUnit.SiemensPerInch, ElectricConductivityUnit.SiemensPerMeter, quantity => (quantity / 3.937007874015748e1, ElectricConductivityUnit.SiemensPerMeter));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -747,10 +747,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(ElectricConductivity), Unit, typeof(ElectricConductivity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<ElectricConductivity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (ElectricConductivity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new ElectricConductivity(c.Item1, (ElectricConductivityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

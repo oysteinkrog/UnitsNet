@@ -224,17 +224,17 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: IlluminanceUnit -> BaseUnit
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Kilolux, IlluminanceUnit.Lux, quantity => quantity.ToUnit(IlluminanceUnit.Lux));
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Megalux, IlluminanceUnit.Lux, quantity => quantity.ToUnit(IlluminanceUnit.Lux));
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Millilux, IlluminanceUnit.Lux, quantity => quantity.ToUnit(IlluminanceUnit.Lux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Kilolux, quantity => ((quantity) / 1e3d, IlluminanceUnit.Kilolux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Megalux, quantity => ((quantity) / 1e6d, IlluminanceUnit.Megalux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Millilux, quantity => ((quantity) / 1e-3d, IlluminanceUnit.Millilux));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Lux, quantity => quantity);
+            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Lux, quantity => (quantity, IlluminanceUnit.Lux));
 
             // Register in unit converter: BaseUnit -> IlluminanceUnit
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Kilolux, quantity => quantity.ToUnit(IlluminanceUnit.Kilolux));
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Megalux, quantity => quantity.ToUnit(IlluminanceUnit.Megalux));
-            unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Lux, IlluminanceUnit.Millilux, quantity => quantity.ToUnit(IlluminanceUnit.Millilux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Kilolux, IlluminanceUnit.Lux, quantity => ((quantity) / 1e3d, IlluminanceUnit.Lux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Megalux, IlluminanceUnit.Lux, quantity => ((quantity) / 1e6d, IlluminanceUnit.Lux));
+                    unitConverter.SetConversionFunction<Illuminance>(IlluminanceUnit.Millilux, IlluminanceUnit.Lux, quantity => ((quantity) / 1e-3d, IlluminanceUnit.Lux));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -709,10 +709,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Illuminance), Unit, typeof(Illuminance), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Illuminance>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Illuminance)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Illuminance(c.Item1, (IlluminanceUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

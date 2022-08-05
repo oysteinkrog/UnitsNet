@@ -56,9 +56,8 @@ namespace UnitsNet.Tests
             IQuantity ConversionFunction(IQuantity from) => Length.FromInches(18);
 
             var unitConverter = new UnitConverter();
-            unitConverter.SetConversionFunction<Mass, Length>(MassUnit.Grain, LengthUnit.Inch, ConversionFunction);
 
-            var foundConversionFunction = unitConverter.GetConversionFunction<Mass, Length>(MassUnit.Grain, LengthUnit.Inch);
+            var foundConversionFunction = unitConverter.GetConversionFunction<Mass>(MassUnit.Grain, LengthUnit.Inch);
             var converted = foundConversionFunction(Mass.FromGrains(100));
 
             Assert.Equal(Length.FromInches(18), converted);

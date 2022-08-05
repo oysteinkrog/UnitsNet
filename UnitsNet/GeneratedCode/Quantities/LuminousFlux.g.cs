@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: LuminousFluxUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<LuminousFlux>(LuminousFluxUnit.Lumen, LuminousFluxUnit.Lumen, quantity => quantity);
+            unitConverter.SetConversionFunction<LuminousFlux>(LuminousFluxUnit.Lumen, LuminousFluxUnit.Lumen, quantity => (quantity, LuminousFluxUnit.Lumen));
 
             // Register in unit converter: BaseUnit -> LuminousFluxUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(LuminousFlux), Unit, typeof(LuminousFlux), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<LuminousFlux>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (LuminousFlux)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new LuminousFlux(c.Item1, (LuminousFluxUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

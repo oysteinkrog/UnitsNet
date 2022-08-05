@@ -205,7 +205,7 @@ namespace UnitsNet
             // Register in unit converter: ScalarUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Scalar>(ScalarUnit.Amount, ScalarUnit.Amount, quantity => quantity);
+            unitConverter.SetConversionFunction<Scalar>(ScalarUnit.Amount, ScalarUnit.Amount, quantity => (quantity, ScalarUnit.Amount));
 
             // Register in unit converter: BaseUnit -> ScalarUnit
         }
@@ -649,10 +649,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Scalar), Unit, typeof(Scalar), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Scalar>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Scalar)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Scalar(c.Item1, (ScalarUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

@@ -251,27 +251,27 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: StandardVolumeFlowUnit -> BaseUnit
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerHour, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerDay, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerHour, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardLiterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute, quantity => (quantity * 6e7, StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerHour, quantity => (quantity / 7.8657907199999087346816086183876e-6, StandardVolumeFlowUnit.StandardCubicFootPerHour));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerMinute, quantity => (quantity * 2118.88000326, StandardVolumeFlowUnit.StandardCubicFootPerMinute));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerSecond, quantity => (quantity * 35.314666721, StandardVolumeFlowUnit.StandardCubicFootPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerDay, quantity => (quantity * 86400, StandardVolumeFlowUnit.StandardCubicMeterPerDay));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerHour, quantity => (quantity * 3600, StandardVolumeFlowUnit.StandardCubicMeterPerHour));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerMinute, quantity => (quantity * 60, StandardVolumeFlowUnit.StandardCubicMeterPerMinute));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardLiterPerMinute, quantity => (quantity * 60000, StandardVolumeFlowUnit.StandardLiterPerMinute));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => quantity);
+            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
 
             // Register in unit converter: BaseUnit -> StandardVolumeFlowUnit
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerHour, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicFootPerHour));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerMinute, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicFootPerMinute));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicFootPerSecond, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicFootPerSecond));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerDay, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerDay));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerHour, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerHour));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerMinute, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardCubicMeterPerMinute));
-            unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerSecond, StandardVolumeFlowUnit.StandardLiterPerMinute, quantity => quantity.ToUnit(StandardVolumeFlowUnit.StandardLiterPerMinute));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicCentimeterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 6e7, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerHour, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity / 7.8657907199999087346816086183876e-6, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 2118.88000326, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicFootPerSecond, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 35.314666721, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerDay, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 86400, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerHour, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 3600, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardCubicMeterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 60, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
+                    unitConverter.SetConversionFunction<StandardVolumeFlow>(StandardVolumeFlowUnit.StandardLiterPerMinute, StandardVolumeFlowUnit.StandardCubicMeterPerSecond, quantity => (quantity * 60000, StandardVolumeFlowUnit.StandardCubicMeterPerSecond));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -801,10 +801,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(StandardVolumeFlow), Unit, typeof(StandardVolumeFlow), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<StandardVolumeFlow>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (StandardVolumeFlow)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new StandardVolumeFlow(c.Item1, (StandardVolumeFlowUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

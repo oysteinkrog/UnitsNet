@@ -371,16 +371,25 @@ namespace UnitsNet
                 if (unit.SingularName == _quantity.BaseUnit)
                     continue;
 
-                var func = unit.FromUnitToBaseFunc.Replace("{x}", "quantity.Value");
+            string func;
+            if (unit.FromBaseToUnitFunc.Contains("m"))
+            {
+                func = unit.FromBaseToUnitFunc.Replace("{x}", "(decimal)quantity");
                 Writer.WL($@"
-            unitConverter.SetConversionFunction<{_quantity.Name}>({_quantity.Name}Unit.{unit.SingularName}, {_unitEnumName}.{_quantity.BaseUnit}, quantity => quantity.ToUnit({_unitEnumName}.{_quantity.BaseUnit}));");
+                    unitConverter.SetConversionFunction<{_quantity.Name}>({_unitEnumName}.{_quantity.BaseUnit}, {_quantity.Name}Unit.{unit.SingularName}, quantity => ((double)({func}), {_quantity.Name}Unit.{unit.SingularName}));");
             }
-
-            Writer.WL();
-            Writer.WL($@"
+            else
+            {
+                func = unit.FromBaseToUnitFunc.Replace("{x}", "quantity");
+                Writer.WL($@"
+                    unitConverter.SetConversionFunction<{_quantity.Name}>({_unitEnumName}.{_quantity.BaseUnit}, {_quantity.Name}Unit.{unit.SingularName}, quantity => ({func}, {_quantity.Name}Unit.{unit.SingularName}));");
+            }
+        }
+        Writer.WL();
+        Writer.WL($@"
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<{_quantity.Name}>({_unitEnumName}.{_quantity.BaseUnit}, {_unitEnumName}.{_quantity.BaseUnit}, quantity => quantity);
+            unitConverter.SetConversionFunction<{_quantity.Name}>({_unitEnumName}.{_quantity.BaseUnit}, {_unitEnumName}.{_quantity.BaseUnit}, quantity => (quantity, {_unitEnumName}.{_quantity.BaseUnit}));
 
             // Register in unit converter: BaseUnit -> {_quantity.Name}Unit");
 
@@ -389,12 +398,21 @@ namespace UnitsNet
                 if (unit.SingularName == _quantity.BaseUnit)
                     continue;
 
-                var func = unit.FromBaseToUnitFunc.Replace("{x}", "quantity.Value");
+            if (unit.FromBaseToUnitFunc.Contains("m"))
+            {
+                var func = unit.FromBaseToUnitFunc.Replace("{x}", "(decimal)quantity");
                 Writer.WL($@"
-            unitConverter.SetConversionFunction<{_quantity.Name}>({_unitEnumName}.{_quantity.BaseUnit}, {_quantity.Name}Unit.{unit.SingularName}, quantity => quantity.ToUnit({_quantity.Name}Unit.{unit.SingularName}));");
+                    unitConverter.SetConversionFunction<{_quantity.Name}>({_quantity.Name}Unit.{unit.SingularName}, {_unitEnumName}.{_quantity.BaseUnit}, quantity => ((double)({func}), {_unitEnumName}.{_quantity.BaseUnit}));");
             }
+            else
+            {
+                var func = unit.FromBaseToUnitFunc.Replace("{x}", "quantity");
+                Writer.WL($@"
+                    unitConverter.SetConversionFunction<{_quantity.Name}>({_quantity.Name}Unit.{unit.SingularName}, {_unitEnumName}.{_quantity.BaseUnit}, quantity => ({func}, {_unitEnumName}.{_quantity.BaseUnit}));");
+            }
+        }
 
-            Writer.WL($@"
+        Writer.WL($@"
         }}
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -959,10 +977,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }}
-            else if (unitConverter.TryGetConversionFunction<{_quantity.Name}, {_quantity.Name}>(Unit, unit, out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<{_quantity.Name}>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {{
-                // See if the unit converter has an extensibility conversion registered.
-                return ({_quantity.Name})conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new {_quantity.Name}(c.Item1, ({_unitEnumName})c.Item2);
             }}
             else if (Unit != BaseUnit)
             {{

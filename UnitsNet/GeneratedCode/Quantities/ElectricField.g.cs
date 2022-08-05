@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: ElectricFieldUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<ElectricField>(ElectricFieldUnit.VoltPerMeter, ElectricFieldUnit.VoltPerMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<ElectricField>(ElectricFieldUnit.VoltPerMeter, ElectricFieldUnit.VoltPerMeter, quantity => (quantity, ElectricFieldUnit.VoltPerMeter));
 
             // Register in unit converter: BaseUnit -> ElectricFieldUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(ElectricField), Unit, typeof(ElectricField), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<ElectricField>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (ElectricField)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new ElectricField(c.Item1, (ElectricFieldUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

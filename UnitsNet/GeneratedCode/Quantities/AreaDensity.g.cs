@@ -205,7 +205,7 @@ namespace UnitsNet
             // Register in unit converter: AreaDensityUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<AreaDensity>(AreaDensityUnit.KilogramPerSquareMeter, AreaDensityUnit.KilogramPerSquareMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<AreaDensity>(AreaDensityUnit.KilogramPerSquareMeter, AreaDensityUnit.KilogramPerSquareMeter, quantity => (quantity, AreaDensityUnit.KilogramPerSquareMeter));
 
             // Register in unit converter: BaseUnit -> AreaDensityUnit
         }
@@ -649,10 +649,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(AreaDensity), Unit, typeof(AreaDensity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<AreaDensity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (AreaDensity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new AreaDensity(c.Item1, (AreaDensityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

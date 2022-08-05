@@ -344,57 +344,57 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: MassFractionUnit -> BaseUnit
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.CentigramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.CentigramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecagramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecagramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecigramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecigramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.GramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.GramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.HectogramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.HectogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.KilogramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.KilogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MicrogramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MicrogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MilligramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MilligramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.NanogramPerGram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.NanogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerBillion, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerMillion, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerThousand, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerTrillion, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.Percent, MassFractionUnit.DecimalFraction, quantity => quantity.ToUnit(MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.CentigramPerGram, quantity => ((quantity) / 1e-2d, MassFractionUnit.CentigramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.CentigramPerKilogram, quantity => ((quantity * 1e3) / 1e-2d, MassFractionUnit.CentigramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecagramPerGram, quantity => ((quantity) / 1e1d, MassFractionUnit.DecagramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecagramPerKilogram, quantity => ((quantity * 1e3) / 1e1d, MassFractionUnit.DecagramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecigramPerGram, quantity => ((quantity) / 1e-1d, MassFractionUnit.DecigramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecigramPerKilogram, quantity => ((quantity * 1e3) / 1e-1d, MassFractionUnit.DecigramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.GramPerGram, quantity => (quantity, MassFractionUnit.GramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.GramPerKilogram, quantity => (quantity * 1e3, MassFractionUnit.GramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.HectogramPerGram, quantity => ((quantity) / 1e2d, MassFractionUnit.HectogramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.HectogramPerKilogram, quantity => ((quantity * 1e3) / 1e2d, MassFractionUnit.HectogramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.KilogramPerGram, quantity => ((quantity) / 1e3d, MassFractionUnit.KilogramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.KilogramPerKilogram, quantity => ((quantity * 1e3) / 1e3d, MassFractionUnit.KilogramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MicrogramPerGram, quantity => ((quantity) / 1e-6d, MassFractionUnit.MicrogramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MicrogramPerKilogram, quantity => ((quantity * 1e3) / 1e-6d, MassFractionUnit.MicrogramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MilligramPerGram, quantity => ((quantity) / 1e-3d, MassFractionUnit.MilligramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MilligramPerKilogram, quantity => ((quantity * 1e3) / 1e-3d, MassFractionUnit.MilligramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.NanogramPerGram, quantity => ((quantity) / 1e-9d, MassFractionUnit.NanogramPerGram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.NanogramPerKilogram, quantity => ((quantity * 1e3) / 1e-9d, MassFractionUnit.NanogramPerKilogram));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerBillion, quantity => (quantity * 1e9, MassFractionUnit.PartPerBillion));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerMillion, quantity => (quantity * 1e6, MassFractionUnit.PartPerMillion));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerThousand, quantity => (quantity * 1e3, MassFractionUnit.PartPerThousand));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerTrillion, quantity => (quantity * 1e12, MassFractionUnit.PartPerTrillion));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.Percent, quantity => (quantity * 1e2, MassFractionUnit.Percent));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecimalFraction, quantity => quantity);
+            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecimalFraction, quantity => (quantity, MassFractionUnit.DecimalFraction));
 
             // Register in unit converter: BaseUnit -> MassFractionUnit
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.CentigramPerGram, quantity => quantity.ToUnit(MassFractionUnit.CentigramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.CentigramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.CentigramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecagramPerGram, quantity => quantity.ToUnit(MassFractionUnit.DecagramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecagramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.DecagramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecigramPerGram, quantity => quantity.ToUnit(MassFractionUnit.DecigramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.DecigramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.DecigramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.GramPerGram, quantity => quantity.ToUnit(MassFractionUnit.GramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.GramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.GramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.HectogramPerGram, quantity => quantity.ToUnit(MassFractionUnit.HectogramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.HectogramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.HectogramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.KilogramPerGram, quantity => quantity.ToUnit(MassFractionUnit.KilogramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.KilogramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.KilogramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MicrogramPerGram, quantity => quantity.ToUnit(MassFractionUnit.MicrogramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MicrogramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.MicrogramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MilligramPerGram, quantity => quantity.ToUnit(MassFractionUnit.MilligramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.MilligramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.MilligramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.NanogramPerGram, quantity => quantity.ToUnit(MassFractionUnit.NanogramPerGram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.NanogramPerKilogram, quantity => quantity.ToUnit(MassFractionUnit.NanogramPerKilogram));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerBillion, quantity => quantity.ToUnit(MassFractionUnit.PartPerBillion));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerMillion, quantity => quantity.ToUnit(MassFractionUnit.PartPerMillion));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerThousand, quantity => quantity.ToUnit(MassFractionUnit.PartPerThousand));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.PartPerTrillion, quantity => quantity.ToUnit(MassFractionUnit.PartPerTrillion));
-            unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecimalFraction, MassFractionUnit.Percent, quantity => quantity.ToUnit(MassFractionUnit.Percent));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.CentigramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e-2d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.CentigramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e-2d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecagramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e1d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecagramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e1d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecigramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e-1d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.DecigramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e-1d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.GramPerGram, MassFractionUnit.DecimalFraction, quantity => (quantity, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.GramPerKilogram, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e3, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.HectogramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e2d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.HectogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e2d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.KilogramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e3d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.KilogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e3d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MicrogramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e-6d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MicrogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e-6d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MilligramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e-3d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.MilligramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e-3d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.NanogramPerGram, MassFractionUnit.DecimalFraction, quantity => ((quantity) / 1e-9d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.NanogramPerKilogram, MassFractionUnit.DecimalFraction, quantity => ((quantity * 1e3) / 1e-9d, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerBillion, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e9, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerMillion, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e6, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerThousand, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e3, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.PartPerTrillion, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e12, MassFractionUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<MassFraction>(MassFractionUnit.Percent, MassFractionUnit.DecimalFraction, quantity => (quantity * 1e2, MassFractionUnit.DecimalFraction));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -1089,10 +1089,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(MassFraction), Unit, typeof(MassFraction), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<MassFraction>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (MassFraction)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new MassFraction(c.Item1, (MassFractionUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

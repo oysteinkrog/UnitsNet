@@ -230,19 +230,19 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: PorousMediumPermeabilityUnit -> BaseUnit
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Darcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.SquareMeter));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Microdarcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.SquareMeter));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Millidarcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.SquareMeter));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareCentimeter, PorousMediumPermeabilityUnit.SquareMeter, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.SquareMeter));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Darcy, quantity => (quantity / 9.869233e-13, PorousMediumPermeabilityUnit.Darcy));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Microdarcy, quantity => ((quantity / 9.869233e-13) / 1e-6d, PorousMediumPermeabilityUnit.Microdarcy));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Millidarcy, quantity => ((quantity / 9.869233e-13) / 1e-3d, PorousMediumPermeabilityUnit.Millidarcy));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.SquareCentimeter, quantity => (quantity / 1e-4, PorousMediumPermeabilityUnit.SquareCentimeter));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.SquareMeter, quantity => quantity);
+            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.SquareMeter, quantity => (quantity, PorousMediumPermeabilityUnit.SquareMeter));
 
             // Register in unit converter: BaseUnit -> PorousMediumPermeabilityUnit
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Darcy, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.Darcy));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Microdarcy, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.Microdarcy));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.Millidarcy, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.Millidarcy));
-            unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareMeter, PorousMediumPermeabilityUnit.SquareCentimeter, quantity => quantity.ToUnit(PorousMediumPermeabilityUnit.SquareCentimeter));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Darcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => (quantity / 9.869233e-13, PorousMediumPermeabilityUnit.SquareMeter));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Microdarcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => ((quantity / 9.869233e-13) / 1e-6d, PorousMediumPermeabilityUnit.SquareMeter));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.Millidarcy, PorousMediumPermeabilityUnit.SquareMeter, quantity => ((quantity / 9.869233e-13) / 1e-3d, PorousMediumPermeabilityUnit.SquareMeter));
+                    unitConverter.SetConversionFunction<PorousMediumPermeability>(PorousMediumPermeabilityUnit.SquareCentimeter, PorousMediumPermeabilityUnit.SquareMeter, quantity => (quantity / 1e-4, PorousMediumPermeabilityUnit.SquareMeter));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -728,10 +728,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(PorousMediumPermeability), Unit, typeof(PorousMediumPermeability), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<PorousMediumPermeability>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (PorousMediumPermeability)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new PorousMediumPermeability(c.Item1, (PorousMediumPermeabilityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

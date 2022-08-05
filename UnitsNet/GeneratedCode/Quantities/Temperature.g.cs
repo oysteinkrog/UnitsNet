@@ -257,29 +257,29 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: TemperatureUnit -> BaseUnit
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeCelsius, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeDelisle, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeFahrenheit, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeNewton, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeRankine, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeReaumur, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeRoemer, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.MillidegreeCelsius, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.SolarTemperature, TemperatureUnit.Kelvin, quantity => quantity.ToUnit(TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeCelsius, quantity => (quantity - 273.15, TemperatureUnit.DegreeCelsius));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeDelisle, quantity => ((quantity - 373.15) * -3 / 2, TemperatureUnit.DegreeDelisle));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeFahrenheit, quantity => ((quantity - 459.67 * 5 / 9) * 9 / 5, TemperatureUnit.DegreeFahrenheit));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeNewton, quantity => ((quantity - 273.15) * 33 / 100, TemperatureUnit.DegreeNewton));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeRankine, quantity => (quantity * 9 / 5, TemperatureUnit.DegreeRankine));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeReaumur, quantity => ((quantity - 273.15) * 4 / 5, TemperatureUnit.DegreeReaumur));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeRoemer, quantity => ((quantity - (273.15 - 7.5 * 40d / 21)) * 21 / 40, TemperatureUnit.DegreeRoemer));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.MillidegreeCelsius, quantity => ((quantity - 273.15) * 1000, TemperatureUnit.MillidegreeCelsius));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.SolarTemperature, quantity => (quantity / 5778, TemperatureUnit.SolarTemperature));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.Kelvin, quantity => quantity);
+            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.Kelvin, quantity => (quantity, TemperatureUnit.Kelvin));
 
             // Register in unit converter: BaseUnit -> TemperatureUnit
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeCelsius, quantity => quantity.ToUnit(TemperatureUnit.DegreeCelsius));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeDelisle, quantity => quantity.ToUnit(TemperatureUnit.DegreeDelisle));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeFahrenheit, quantity => quantity.ToUnit(TemperatureUnit.DegreeFahrenheit));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeNewton, quantity => quantity.ToUnit(TemperatureUnit.DegreeNewton));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeRankine, quantity => quantity.ToUnit(TemperatureUnit.DegreeRankine));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeReaumur, quantity => quantity.ToUnit(TemperatureUnit.DegreeReaumur));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.DegreeRoemer, quantity => quantity.ToUnit(TemperatureUnit.DegreeRoemer));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.MillidegreeCelsius, quantity => quantity.ToUnit(TemperatureUnit.MillidegreeCelsius));
-            unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.Kelvin, TemperatureUnit.SolarTemperature, quantity => quantity.ToUnit(TemperatureUnit.SolarTemperature));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeCelsius, TemperatureUnit.Kelvin, quantity => (quantity - 273.15, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeDelisle, TemperatureUnit.Kelvin, quantity => ((quantity - 373.15) * -3 / 2, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeFahrenheit, TemperatureUnit.Kelvin, quantity => ((quantity - 459.67 * 5 / 9) * 9 / 5, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeNewton, TemperatureUnit.Kelvin, quantity => ((quantity - 273.15) * 33 / 100, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeRankine, TemperatureUnit.Kelvin, quantity => (quantity * 9 / 5, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeReaumur, TemperatureUnit.Kelvin, quantity => ((quantity - 273.15) * 4 / 5, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.DegreeRoemer, TemperatureUnit.Kelvin, quantity => ((quantity - (273.15 - 7.5 * 40d / 21)) * 21 / 40, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.MillidegreeCelsius, TemperatureUnit.Kelvin, quantity => ((quantity - 273.15) * 1000, TemperatureUnit.Kelvin));
+                    unitConverter.SetConversionFunction<Temperature>(TemperatureUnit.SolarTemperature, TemperatureUnit.Kelvin, quantity => (quantity / 5778, TemperatureUnit.Kelvin));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -774,10 +774,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Temperature), Unit, typeof(Temperature), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Temperature>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Temperature)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Temperature(c.Item1, (TemperatureUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

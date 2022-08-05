@@ -205,7 +205,7 @@ namespace UnitsNet
             // Register in unit converter: RelativeHumidityUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<RelativeHumidity>(RelativeHumidityUnit.Percent, RelativeHumidityUnit.Percent, quantity => quantity);
+            unitConverter.SetConversionFunction<RelativeHumidity>(RelativeHumidityUnit.Percent, RelativeHumidityUnit.Percent, quantity => (quantity, RelativeHumidityUnit.Percent));
 
             // Register in unit converter: BaseUnit -> RelativeHumidityUnit
         }
@@ -649,10 +649,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(RelativeHumidity), Unit, typeof(RelativeHumidity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<RelativeHumidity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (RelativeHumidity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new RelativeHumidity(c.Item1, (RelativeHumidityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

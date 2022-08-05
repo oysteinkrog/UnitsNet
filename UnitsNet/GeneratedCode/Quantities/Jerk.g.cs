@@ -263,31 +263,31 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: JerkUnit -> BaseUnit
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.CentimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.DecimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.FootPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.InchPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.KilometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MicrometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MillimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MillistandardGravitiesPerSecond, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.NanometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.StandardGravitiesPerSecond, JerkUnit.MeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.CentimeterPerSecondCubed, quantity => ((quantity) / 1e-2d, JerkUnit.CentimeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.DecimeterPerSecondCubed, quantity => ((quantity) / 1e-1d, JerkUnit.DecimeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.FootPerSecondCubed, quantity => (quantity / 0.304800, JerkUnit.FootPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.InchPerSecondCubed, quantity => (quantity / 0.0254, JerkUnit.InchPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.KilometerPerSecondCubed, quantity => ((quantity) / 1e3d, JerkUnit.KilometerPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MicrometerPerSecondCubed, quantity => ((quantity) / 1e-6d, JerkUnit.MicrometerPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MillimeterPerSecondCubed, quantity => ((quantity) / 1e-3d, JerkUnit.MillimeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MillistandardGravitiesPerSecond, quantity => ((quantity / 9.80665) / 1e-3d, JerkUnit.MillistandardGravitiesPerSecond));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.NanometerPerSecondCubed, quantity => ((quantity) / 1e-9d, JerkUnit.NanometerPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.StandardGravitiesPerSecond, quantity => (quantity / 9.80665, JerkUnit.StandardGravitiesPerSecond));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => quantity);
+            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => (quantity, JerkUnit.MeterPerSecondCubed));
 
             // Register in unit converter: BaseUnit -> JerkUnit
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.CentimeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.CentimeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.DecimeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.DecimeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.FootPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.FootPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.InchPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.InchPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.KilometerPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.KilometerPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MicrometerPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MicrometerPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MillimeterPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.MillimeterPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.MillistandardGravitiesPerSecond, quantity => quantity.ToUnit(JerkUnit.MillistandardGravitiesPerSecond));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.NanometerPerSecondCubed, quantity => quantity.ToUnit(JerkUnit.NanometerPerSecondCubed));
-            unitConverter.SetConversionFunction<Jerk>(JerkUnit.MeterPerSecondCubed, JerkUnit.StandardGravitiesPerSecond, quantity => quantity.ToUnit(JerkUnit.StandardGravitiesPerSecond));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.CentimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e-2d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.DecimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e-1d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.FootPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => (quantity / 0.304800, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.InchPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => (quantity / 0.0254, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.KilometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e3d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MicrometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e-6d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MillimeterPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e-3d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.MillistandardGravitiesPerSecond, JerkUnit.MeterPerSecondCubed, quantity => ((quantity / 9.80665) / 1e-3d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.NanometerPerSecondCubed, JerkUnit.MeterPerSecondCubed, quantity => ((quantity) / 1e-9d, JerkUnit.MeterPerSecondCubed));
+                    unitConverter.SetConversionFunction<Jerk>(JerkUnit.StandardGravitiesPerSecond, JerkUnit.MeterPerSecondCubed, quantity => (quantity / 9.80665, JerkUnit.MeterPerSecondCubed));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -850,10 +850,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Jerk), Unit, typeof(Jerk), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Jerk>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Jerk)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Jerk(c.Item1, (JerkUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

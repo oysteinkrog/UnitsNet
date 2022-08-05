@@ -233,21 +233,21 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: RatioUnit -> BaseUnit
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerBillion, RatioUnit.DecimalFraction, quantity => quantity.ToUnit(RatioUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerMillion, RatioUnit.DecimalFraction, quantity => quantity.ToUnit(RatioUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerThousand, RatioUnit.DecimalFraction, quantity => quantity.ToUnit(RatioUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerTrillion, RatioUnit.DecimalFraction, quantity => quantity.ToUnit(RatioUnit.DecimalFraction));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.Percent, RatioUnit.DecimalFraction, quantity => quantity.ToUnit(RatioUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerBillion, quantity => (quantity * 1e9, RatioUnit.PartPerBillion));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerMillion, quantity => (quantity * 1e6, RatioUnit.PartPerMillion));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerThousand, quantity => (quantity * 1e3, RatioUnit.PartPerThousand));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerTrillion, quantity => (quantity * 1e12, RatioUnit.PartPerTrillion));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.Percent, quantity => (quantity * 1e2, RatioUnit.Percent));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.DecimalFraction, quantity => quantity);
+            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.DecimalFraction, quantity => (quantity, RatioUnit.DecimalFraction));
 
             // Register in unit converter: BaseUnit -> RatioUnit
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerBillion, quantity => quantity.ToUnit(RatioUnit.PartPerBillion));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerMillion, quantity => quantity.ToUnit(RatioUnit.PartPerMillion));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerThousand, quantity => quantity.ToUnit(RatioUnit.PartPerThousand));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.PartPerTrillion, quantity => quantity.ToUnit(RatioUnit.PartPerTrillion));
-            unitConverter.SetConversionFunction<Ratio>(RatioUnit.DecimalFraction, RatioUnit.Percent, quantity => quantity.ToUnit(RatioUnit.Percent));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerBillion, RatioUnit.DecimalFraction, quantity => (quantity * 1e9, RatioUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerMillion, RatioUnit.DecimalFraction, quantity => (quantity * 1e6, RatioUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerThousand, RatioUnit.DecimalFraction, quantity => (quantity * 1e3, RatioUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.PartPerTrillion, RatioUnit.DecimalFraction, quantity => (quantity * 1e12, RatioUnit.DecimalFraction));
+                    unitConverter.SetConversionFunction<Ratio>(RatioUnit.Percent, RatioUnit.DecimalFraction, quantity => (quantity * 1e2, RatioUnit.DecimalFraction));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -744,10 +744,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Ratio), Unit, typeof(Ratio), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Ratio>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Ratio)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Ratio(c.Item1, (RatioUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: MagneticFluxUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<MagneticFlux>(MagneticFluxUnit.Weber, MagneticFluxUnit.Weber, quantity => quantity);
+            unitConverter.SetConversionFunction<MagneticFlux>(MagneticFluxUnit.Weber, MagneticFluxUnit.Weber, quantity => (quantity, MagneticFluxUnit.Weber));
 
             // Register in unit converter: BaseUnit -> MagneticFluxUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(MagneticFlux), Unit, typeof(MagneticFlux), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<MagneticFlux>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (MagneticFlux)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new MagneticFlux(c.Item1, (MagneticFluxUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

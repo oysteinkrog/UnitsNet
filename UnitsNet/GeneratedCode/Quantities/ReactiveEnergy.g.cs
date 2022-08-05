@@ -215,15 +215,15 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: ReactiveEnergyUnit -> BaseUnit
-            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.KilovoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => quantity.ToUnit(ReactiveEnergyUnit.VoltampereReactiveHour));
-            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.MegavoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => quantity.ToUnit(ReactiveEnergyUnit.VoltampereReactiveHour));
+                    unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.KilovoltampereReactiveHour, quantity => ((quantity) / 1e3d, ReactiveEnergyUnit.KilovoltampereReactiveHour));
+                    unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.MegavoltampereReactiveHour, quantity => ((quantity) / 1e6d, ReactiveEnergyUnit.MegavoltampereReactiveHour));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => quantity);
+            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => (quantity, ReactiveEnergyUnit.VoltampereReactiveHour));
 
             // Register in unit converter: BaseUnit -> ReactiveEnergyUnit
-            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.KilovoltampereReactiveHour, quantity => quantity.ToUnit(ReactiveEnergyUnit.KilovoltampereReactiveHour));
-            unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.VoltampereReactiveHour, ReactiveEnergyUnit.MegavoltampereReactiveHour, quantity => quantity.ToUnit(ReactiveEnergyUnit.MegavoltampereReactiveHour));
+                    unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.KilovoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => ((quantity) / 1e3d, ReactiveEnergyUnit.VoltampereReactiveHour));
+                    unitConverter.SetConversionFunction<ReactiveEnergy>(ReactiveEnergyUnit.MegavoltampereReactiveHour, ReactiveEnergyUnit.VoltampereReactiveHour, quantity => ((quantity) / 1e6d, ReactiveEnergyUnit.VoltampereReactiveHour));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -687,10 +687,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(ReactiveEnergy), Unit, typeof(ReactiveEnergy), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<ReactiveEnergy>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (ReactiveEnergy)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new ReactiveEnergy(c.Item1, (ReactiveEnergyUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

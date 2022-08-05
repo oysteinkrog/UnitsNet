@@ -227,19 +227,19 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: ElectricPotentialAcUnit -> BaseUnit
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.KilovoltAc, ElectricPotentialAcUnit.VoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.VoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MegavoltAc, ElectricPotentialAcUnit.VoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.VoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MicrovoltAc, ElectricPotentialAcUnit.VoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.VoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MillivoltAc, ElectricPotentialAcUnit.VoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.VoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.KilovoltAc, quantity => ((quantity) / 1e3d, ElectricPotentialAcUnit.KilovoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MegavoltAc, quantity => ((quantity) / 1e6d, ElectricPotentialAcUnit.MegavoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MicrovoltAc, quantity => ((quantity) / 1e-6d, ElectricPotentialAcUnit.MicrovoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MillivoltAc, quantity => ((quantity) / 1e-3d, ElectricPotentialAcUnit.MillivoltAc));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.VoltAc, quantity => quantity);
+            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.VoltAc, quantity => (quantity, ElectricPotentialAcUnit.VoltAc));
 
             // Register in unit converter: BaseUnit -> ElectricPotentialAcUnit
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.KilovoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.KilovoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MegavoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.MegavoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MicrovoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.MicrovoltAc));
-            unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.VoltAc, ElectricPotentialAcUnit.MillivoltAc, quantity => quantity.ToUnit(ElectricPotentialAcUnit.MillivoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.KilovoltAc, ElectricPotentialAcUnit.VoltAc, quantity => ((quantity) / 1e3d, ElectricPotentialAcUnit.VoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MegavoltAc, ElectricPotentialAcUnit.VoltAc, quantity => ((quantity) / 1e6d, ElectricPotentialAcUnit.VoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MicrovoltAc, ElectricPotentialAcUnit.VoltAc, quantity => ((quantity) / 1e-6d, ElectricPotentialAcUnit.VoltAc));
+                    unitConverter.SetConversionFunction<ElectricPotentialAc>(ElectricPotentialAcUnit.MillivoltAc, ElectricPotentialAcUnit.VoltAc, quantity => ((quantity) / 1e-3d, ElectricPotentialAcUnit.VoltAc));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -725,10 +725,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(ElectricPotentialAc), Unit, typeof(ElectricPotentialAc), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<ElectricPotentialAc>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (ElectricPotentialAc)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new ElectricPotentialAc(c.Item1, (ElectricPotentialAcUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

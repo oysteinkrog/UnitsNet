@@ -239,23 +239,23 @@ namespace UnitsNet
         internal static void RegisterDefaultConversions(UnitConverter unitConverter)
         {
             // Register in unit converter: CompressibilityUnit -> BaseUnit
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseAtmosphere, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseBar, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseKilopascal, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseMegapascal, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseMillibar, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePoundForcePerSquareInch, CompressibilityUnit.InversePascal, quantity => quantity.ToUnit(CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseAtmosphere, quantity => (quantity / 101325, CompressibilityUnit.InverseAtmosphere));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseBar, quantity => (quantity / 1e5, CompressibilityUnit.InverseBar));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseKilopascal, quantity => (quantity / 1e3, CompressibilityUnit.InverseKilopascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseMegapascal, quantity => (quantity / 1e6, CompressibilityUnit.InverseMegapascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseMillibar, quantity => (quantity / 100, CompressibilityUnit.InverseMillibar));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InversePoundForcePerSquareInch, quantity => (quantity / 6.894757293168361e3, CompressibilityUnit.InversePoundForcePerSquareInch));
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InversePascal, quantity => quantity);
+            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InversePascal, quantity => (quantity, CompressibilityUnit.InversePascal));
 
             // Register in unit converter: BaseUnit -> CompressibilityUnit
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseAtmosphere, quantity => quantity.ToUnit(CompressibilityUnit.InverseAtmosphere));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseBar, quantity => quantity.ToUnit(CompressibilityUnit.InverseBar));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseKilopascal, quantity => quantity.ToUnit(CompressibilityUnit.InverseKilopascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseMegapascal, quantity => quantity.ToUnit(CompressibilityUnit.InverseMegapascal));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InverseMillibar, quantity => quantity.ToUnit(CompressibilityUnit.InverseMillibar));
-            unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePascal, CompressibilityUnit.InversePoundForcePerSquareInch, quantity => quantity.ToUnit(CompressibilityUnit.InversePoundForcePerSquareInch));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseAtmosphere, CompressibilityUnit.InversePascal, quantity => (quantity / 101325, CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseBar, CompressibilityUnit.InversePascal, quantity => (quantity / 1e5, CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseKilopascal, CompressibilityUnit.InversePascal, quantity => (quantity / 1e3, CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseMegapascal, CompressibilityUnit.InversePascal, quantity => (quantity / 1e6, CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InverseMillibar, CompressibilityUnit.InversePascal, quantity => (quantity / 100, CompressibilityUnit.InversePascal));
+                    unitConverter.SetConversionFunction<Compressibility>(CompressibilityUnit.InversePoundForcePerSquareInch, CompressibilityUnit.InversePascal, quantity => (quantity / 6.894757293168361e3, CompressibilityUnit.InversePascal));
         }
 
         internal static void MapGeneratedLocalizations(UnitAbbreviationsCache unitAbbreviationsCache)
@@ -763,10 +763,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Compressibility), Unit, typeof(Compressibility), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Compressibility>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Compressibility)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Compressibility(c.Item1, (CompressibilityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {

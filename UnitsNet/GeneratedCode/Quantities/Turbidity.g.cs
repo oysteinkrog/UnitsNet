@@ -208,7 +208,7 @@ namespace UnitsNet
             // Register in unit converter: TurbidityUnit -> BaseUnit
 
             // Register in unit converter: BaseUnit <-> BaseUnit
-            unitConverter.SetConversionFunction<Turbidity>(TurbidityUnit.NTU, TurbidityUnit.NTU, quantity => quantity);
+            unitConverter.SetConversionFunction<Turbidity>(TurbidityUnit.NTU, TurbidityUnit.NTU, quantity => (quantity, TurbidityUnit.NTU));
 
             // Register in unit converter: BaseUnit -> TurbidityUnit
         }
@@ -652,10 +652,11 @@ namespace UnitsNet
                 // Try to convert using the auto-generated conversion methods.
                 return converted!.Value;
             }
-            else if (unitConverter.TryGetConversionFunction((typeof(Turbidity), Unit, typeof(Turbidity), unit), out var conversionFunction))
+            else if (unitConverter.TryGetConversionFunction<Turbidity>(Unit, unit, out ConversionFunctionSameTypeDecimal conversionFunction))
             {
-                // See if the unit converter has an extensibility conversion registered.
-                return (Turbidity)conversionFunction(this);
+                // Direct conversion to requested unit found. Return the converted quantity.
+                var c = conversionFunction(this.Value);
+                return new Turbidity(c.Item1, (TurbidityUnit)c.Item2);
             }
             else if (Unit != BaseUnit)
             {
